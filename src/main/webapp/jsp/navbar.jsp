@@ -15,7 +15,7 @@
 				<li class="nav-item"><a class="nav-link <%= currentPage.equals("products")? "active": "" %>"
 					href="<%=request.getContextPath()%>/shop?action=products">Products</a></li>
 				<li class="nav-item"><a class="nav-link <%= currentPage.equals("aboutus")? "active": "" %>"
-					href="<%=request.getContextPath()%>/shop?action=aboutus">About Us</a></li>
+					href="<%=request.getContextPath()%>/shop?action=aboutus">About</a></li>
 				
 				<% if (session.getAttribute("username") == null) { %>
 				<li class="nav-item"><a class="nav-link <%= currentPage.equals("login")? "active": "" %>"

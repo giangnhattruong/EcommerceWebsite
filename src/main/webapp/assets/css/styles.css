@@ -61,7 +61,7 @@ footer a, footer a:hover {
 }
 
 #login {
-	width: 45vw;
+	width: 80vw;
 	box-shadow: 2px 2px 5px black;
 }
 
@@ -103,5 +103,9 @@ footer a, footer a:hover {
 	
 	#searchBox button {
 		width: 30%;
+	}
+
+	#login {
+		width: 50vw;
 	}
 }

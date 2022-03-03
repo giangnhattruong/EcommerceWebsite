@@ -1,6 +1,6 @@
 <%@ include file="./header.jsp"%>
 
-<main class="container d-flex flex-wrap ms-5 mt-5">
+<main class="container-fluid d-flex flex-wrap ms-5 mt-5">
 	<div class="card me-5 mb-3">
 		<a href="#"> <img
 			src="<%=request.getContextPath()%>/assets/media/unsplash (1).jpg"
