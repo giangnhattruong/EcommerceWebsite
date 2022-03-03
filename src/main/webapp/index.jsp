@@ -7,7 +7,7 @@
 		<div class="card mb-3">
 		<a href="#"> <img
 			src="<%=request.getContextPath()%>/assets/media/unsplash (1).jpg"
-			class="card-img-top" alt="...">
+			class="card-img-top" alt="product-picture">
 			<div class="card-body">
 				<h5 class="card-title">Iphone 9</h5>
 				<p class="card-text">Ut enim ad minima veniam, quis nostrum
@@ -20,7 +20,7 @@
 	<div class="card mb-3">
 		<a href="#"> <img
 			src="<%=request.getContextPath()%>/assets/media/unsplash (2).jpg"
-			class="card-img-top" alt="...">
+			class="card-img-top" alt="product-picture">
 			<div class="card-body">
 				<h5 class="card-title">Iphone 10</h5>
 				<p class="card-text">Inventore veritatis et quasi architecto
@@ -34,7 +34,7 @@
 	<div class="card mb-3">
 		<a href="#"> <img
 			src="<%=request.getContextPath()%>/assets/media/unsplash (5).jpg"
-			class="card-img-top" alt="...">
+			class="card-img-top" alt="product-picture">
 			<div class="card-body">
 				<h5 class="card-title">Android X</h5>
 				<p class="card-text">Squia non numquam eius modi tempora
@@ -47,7 +47,7 @@
 	<div class="card mb-3">
 		<a href="#"> <img
 			src="<%=request.getContextPath()%>/assets/media/unsplash (8).jpg"
-			class="card-img-top" alt="...">
+			class="card-img-top" alt="product-picture">
 			<div class="card-body">
 				<h5 class="card-title">Android X-5</h5>
 				<p class="card-text">Praesentium voluptatum deleniti atque

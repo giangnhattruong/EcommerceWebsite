@@ -32,7 +32,7 @@ html {
 }
 
 #searchBox {
-	width: 30%;
+	width: 100%;
 }
 
 #searchBox input {
@@ -40,7 +40,7 @@ html {
 }
 
 #searchBox button {
-	width: 30%;
+	width: 40%;
 	border-radius: 0 3em 3em 0;
 }
 
@@ -94,4 +94,14 @@ footer a, footer a:hover {
 
 .footer-item {
 	margin-right: 12rem;
+}
+
+@media screen and (min-width: 992px) {
+	#searchBox {
+		width: 30%;
+	}
+	
+	#searchBox button {
+		width: 30%;
+	}
 }
