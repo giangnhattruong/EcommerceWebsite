@@ -1,0 +1,97 @@
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--text-dark: #000;
+	--text-light: #fff;
+	--bg-main: #f1f1f1;
+	--light-green: #fcfff5;
+	--nav-link: #6c735c;
+	--green: #198754;
+}
+
+html {
+	font-family: 'Roboto', sans-serif;
+}
+
+.topnav {
+	background: url("../media/unsplash (13).jpg") center/cover no-repeat;
+}
+
+.banner {
+	overflow: hidden;
+}
+
+.navbar {
+	font-size: 1.5rem;
+}
+
+.navbar a {
+	margin-right: 3rem;
+}
+
+#searchBox {
+	width: 30%;
+}
+
+#searchBox input {
+	border-radius: 3em 0 0 3em;
+}
+
+#searchBox button {
+	width: 30%;
+	border-radius: 0 3em 3em 0;
+}
+
+main .card {
+	width: 21rem;
+}
+
+main .card a, footer a {
+	text-decoration: none;
+}
+
+main .card a {
+	color: var(--text-dark);
+}
+
+footer a, footer a:hover {
+	color: var(--text-light);
+}
+
+#login {
+	width: 45vw;
+	box-shadow: 2px 2px 5px black;
+}
+
+.about, .error {
+	padding: 6rem;
+}
+
+.about-intro p {
+	padding: 3rem;
+}
+
+.about-details {
+	background: var(--bg-main);
+}
+
+.our-strength {
+	width: 21rem;
+	padding: 3rem;
+	text-align: center;
+}
+
+.our-strength i {
+	font-size: 6rem;
+	color: var(--green);
+}
+
+.our-strength p {
+	text-align: justify;
+}
+
+.footer-item {
+	margin-right: 12rem;
+}
