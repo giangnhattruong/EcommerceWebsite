@@ -6,7 +6,7 @@
 			class="card-img-top">
 		<div class="card-body">
 			<form id="userForm" method="post"
-				action="<%=request.getContextPath()%>/shop">
+				action="<%=request.getContextPath()%>/register">
 				<input type="hidden" name="formAction" value="register">
 
 				<%

@@ -19,12 +19,12 @@
 				
 				<% if (session.getAttribute("username") == null) { %>
 				<li class="nav-item"><a class="nav-link <%= currentPage.equals("login")? "active": "" %>"
-					href="<%=request.getContextPath()%>/shop?action=login">Login</a></li>
+					href="<%=request.getContextPath()%>/login">Login</a></li>
 				<li class="nav-item"><a class="nav-link <%= currentPage.equals("register")? "active": "" %>"
-					href="<%=request.getContextPath()%>/shop?action=register">Register</a></li>
+					href="<%=request.getContextPath()%>/register">Register</a></li>
 				<% } else { %>
 				<li class="nav-item"><a class="nav-link"
-					href="<%=request.getContextPath()%>/shop?action=logout">Logout</a></li>
+					href="<%=request.getContextPath()%>/logout">Logout</a></li>
 				<% } %>
 			</ul>
 			<%@ include file="./search.jsp" %>

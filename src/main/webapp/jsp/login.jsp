@@ -6,7 +6,7 @@
 			class="card-img-top">
 		<div class="card-body">
 			<form id="userForm" method="post"
-				action="<%=request.getContextPath()%>/shop"
+				action="<%=request.getContextPath()%>/login"
 				onsubmit="return validateForm()">
 				<input type="hidden" name="formAction" value="login">
 
@@ -36,7 +36,7 @@
 							name="rememberMe"> <label class="form-check-label"
 							for="rememberMe"> Remember me </label>
 					</div>
-					<a href="<%=request.getContextPath()%>/shop?action=forgotPassword">
+					<a href="<%=request.getContextPath()%>/login?action=forgotPassword">
 						Forgot password?</a>
 				</div>
 			</form>

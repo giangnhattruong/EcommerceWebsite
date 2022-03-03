@@ -62,7 +62,7 @@ footer a, footer a:hover {
 
 #login {
 	width: 80vw;
-	box-shadow: 2px 2px 5px black;
+	box-shadow: 2px 2px 5px #000;
 }
 
 .about, .error {
@@ -94,6 +94,29 @@ footer a, footer a:hover {
 
 .footer-item {
 	margin-right: 12rem;
+}
+
+#admin {
+	min-height: 100vh;
+}
+
+#admin aside {
+	position: fixed;
+	height: 100vh;
+	box-shadow: 0 2px 5px #000;
+}
+
+#admin aside a {
+	text-decoration: none;
+}
+
+#admin aside h5, #admin aside a, #admin aside i, #admin aside hr {
+	color: #fff;
+	line-height: 2.1rem;
+}
+
+#admin header {
+	box-shadow: 2px 0 5px #000;
 }
 
 @media screen and (min-width: 992px) {

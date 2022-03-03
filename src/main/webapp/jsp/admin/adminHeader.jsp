@@ -23,6 +23,8 @@
 <script src="<%=request.getContextPath()%>/assets/js/bootstrap.min.js"></script>
 </head>
 <body>
-
-</body>
-</html>
+	<div id="admin" class="row g-0">
+		<aside class="col-1 col-lg-3 bg-primary p-5 z-2 d-flex flex-column">
+			<%@ include file="./adminMenu.jsp"%>
+		</aside>
+		<main class="col-11 offset-1 col-lg-9 offset-lg-3">
