@@ -11,10 +11,10 @@
 </head>
 <body>
 <h1>DB Test</h1>
-<sql:transaction dataSource="jdbc/RTTO">
-<sql:query var="result" sql="SELECT * FROM tblUser"></sql:query>
+<sql:transaction dataSource="jdbc/ShoppingDB">
+<sql:query var="result" sql="SELECT DISTINCT product_type FROM Products"></sql:query>
 <c:forEach items="${ result.rows }" var="row">
-<c:out value="${ row.email }"></c:out></br>
+<c:out value="${ row.product_type }"></c:out></br>
 </c:forEach>
 </sql:transaction>
 

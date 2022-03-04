@@ -1,4 +1,6 @@
-<%@ include file="./header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:import url="./header.jsp"></c:import>
 
 <main class="container-fluid d-flex flex-wrap ms-5 mt-5">
 	<div class="card me-5 mb-3">
@@ -55,4 +57,4 @@
 	</div>
 </main>
 
-<%@ include file="./footer.jsp"%>
+<c:import url="./footer.jsp"></c:import>

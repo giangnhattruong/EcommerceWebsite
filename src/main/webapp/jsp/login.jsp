@@ -1,28 +1,26 @@
-<%@ include file="./header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:import url="./header.jsp"></c:import>
 <main class="d-flex justify-content-center p-5">
 	<div class="card" id="login">
 		<img
-			src="<%=request.getContextPath()%>/assets/media/unsplash (15).jpg"
+			src="<c:url value="/assets/media/unsplash (15).jpg"></c:url>"
 			class="card-img-top">
 		<div class="card-body">
 			<form id="userForm" method="post"
-				action="<%=request.getContextPath()%>/login"
+				action="<c:url value="/user"></c:url>"
 				onsubmit="return validateForm()">
 				<input type="hidden" name="formAction" value="login">
 
-				<%
-				if (request.getAttribute("message") != null) {
-				%>
-				<p class="text-danger"><%=request.getAttribute("message")%></p>
-				<%
-				}
-				%>
+				<c:if test="${ not empty message }">
+					<p class="text-danger">${ message }</p>
+				</c:if>
 
 				<div class="mb-3">
 					<label for="username" class="form-label">Email</label> 
 					<input
 						type="text" class="form-control" id="username" name="username"
-						value="<%=request.getAttribute("username") != null ? request.getAttribute("username") : ""%>">
+						value="${ username }">
 				</div>
 				<div class="mb-3">
 					<label for="password" class="form-label">Password</label> 
@@ -36,7 +34,7 @@
 							name="rememberMe"> <label class="form-check-label"
 							for="rememberMe"> Remember me </label>
 					</div>
-					<a href="<%=request.getContextPath()%>/login?action=forgotPassword">
+					<a href="<c:url value="/user?action=forgotPassword"></c:url>">
 						Forgot password?</a>
 				</div>
 			</form>
@@ -44,5 +42,5 @@
 	</div>
 </main>
 <script type="text/javascript"
-	src="<%=request.getContextPath()%>/assets/js/validateForm.js"></script>
-<%@ include file="./footer.jsp"%>
+	src="<c:url value="/assets/js/validateForm.js"></c:url>"></script>
+<c:import url="./footer.jsp"></c:import>

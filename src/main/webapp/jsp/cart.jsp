@@ -1,10 +1,12 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <section id="card" class="bg-white rounded mb-5">
 	<h2>Shopping cart</h2>
 	<div class="card row">
 		<div class="row g-0">
 			<div class="col-2 d-flex align-items-center">
 				<img
-					src="<%=request.getContextPath()%>/assets/media/unsplash (1).jpg"
+					src="<c:url value="/assets/media/unsplash (1).jpg"></c:url>"
 					class="img-fluid rounded-start" alt="product-picture">
 			</div>
 			<div class="col-8 card-body px-1 py-0 d-flex align-items-center">
@@ -19,7 +21,7 @@
 		<div class="row g-0">
 			<div class="col-2 d-flex align-items-center">
 				<img
-					src="<%=request.getContextPath()%>/assets/media/unsplash (2).jpg"
+					src="<c:url value="/assets/media/unsplash (2).jpg"></c:url>"
 					class="img-fluid rounded-start" alt="product-picture">
 			</div>
 			<div class="col-8 card-body px-1 py-0 d-flex align-items-center">

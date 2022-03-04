@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <footer class="p-3 bg-dark mt-auto">
 	<div class="container-fluid text-white d-flex flex-wrap">
 		<div class="footer-item d-flex flex-column my-3">
@@ -12,9 +14,9 @@
 		</div>
 		<div class="footer-item d-flex flex-column my-3">
 			<h5>Menu</h5>
-			<a href="<%=request.getContextPath()%>/shop">Home</a>
-			<a href="<%=request.getContextPath()%>/shop?action=products">Products</a>
-			<a href="<%=request.getContextPath()%>/shop?action=aboutus">About Us</a>
+			<a href="<c:url value="/shop"></c:url>">Home</a>
+			<a href="<c:url value="/shop?action=products"></c:url>">Products</a>
+			<a href="<c:url value="/shop?action=aboutus"></c:url>">About Us</a>
 		</div>
 	</div>
 	<hr class="text-white">

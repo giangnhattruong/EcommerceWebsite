@@ -19,13 +19,17 @@ public class Account {
 		this.password = password;
 	}
 	
-	public Account(String username, String password, String name, String address, String phone, int role, int check) {
+	public Account(String username, String password, String name, String address, String phone) {
 		this(username, password);
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
+		role = 1;
+	}
+	
+	public Account(String username, String password, String name, String address, String phone, int role) {
+		this(username, password, name, address, phone);
 		this.role = role;
-		this.check = check;
 	}
 
 	public String getUsername() {
