@@ -77,7 +77,7 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		//get list of accounts from application
 		List<Account> accounts = getAccounts();
-		
+
 		String username = StringUtils.getString(request.getParameter("username"));
 		String password = StringUtils.getString(request.getParameter("password"));
 		String rememberMe = StringUtils.getString(request.getParameter("rememberMe"));
@@ -145,8 +145,10 @@ public class Login extends HttpServlet {
 	private List<Account> getAccounts() {
 		ServletContext application = getServletContext();
 		List<Account> accounts = (ArrayList<Account>) application.getAttribute("accounts");
-		if (accounts == null)
+		if (accounts == null) {
 			accounts = new ArrayList<>();
+			application.setAttribute("accounts", accounts);
+		}
 		return accounts;
 	}
 

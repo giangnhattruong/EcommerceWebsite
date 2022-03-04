@@ -98,8 +98,10 @@ public class Register extends HttpServlet {
 	private List<Account> getAccounts() {
 		ServletContext application = getServletContext();
 		List<Account> accounts = (ArrayList<Account>) application.getAttribute("accounts");
-		if (accounts == null)
+		if (accounts == null) {
 			accounts = new ArrayList<>();
+			application.setAttribute("accounts", accounts);
+		}
 		return accounts;
 	}
 
