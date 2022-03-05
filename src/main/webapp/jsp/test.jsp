@@ -12,12 +12,15 @@
 <body>
 <h1>DB Test</h1>
 <sql:transaction dataSource="jdbc/ShoppingDB">
-<sql:query var="result" sql="SELECT * FROM Products"></sql:query>
+<sql:query var="result" sql="SELECT * FROM (SELECT *, ROW_NUMBER() OVER(ORDER BY product_id) AS row_number FROM Products
+	WHERE LOWER(product_name) LIKE '%64gb%' OR
+	LOWER(product_brand) LIKE '%64gb%' OR
+	LOWER(product_type) LIKE '%64gb%') AS T">
+</sql:query>
 <c:forEach items="${ result.rows }" var="row">
 <c:out value="${ row.product_name }"></c:out></br>
-<c:out value="${ row.product_type }"></c:out></br>
-<c:out value="${ row.product_brand }"></c:out></br>
-<c:out value="${ row.product_price }"></c:out></br>
+<c:out value="${ row.product_id }"></c:out></br>
+<c:out value="${ row.row_number }"></c:out></br>
 </c:forEach>
 </sql:transaction>
 

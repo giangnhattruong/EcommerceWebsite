@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <footer class="p-3 bg-dark mt-auto">
@@ -9,8 +11,7 @@
 		</div>
 		<div class="footer-item d-flex flex-column my-3">
 			<h5>Categories</h5>
-			<a>Android</a>
-			<a>Apple</a>
+			<a href="<c:url value="/shop?action=products&category=cellphone"></c:url>">Cellphone</a>
 		</div>
 		<div class="footer-item d-flex flex-column my-3">
 			<h5>Menu</h5>

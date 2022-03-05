@@ -36,10 +36,18 @@ html {
 }
 
 #searchBox input {
+	font-size: 0.9rem;
 	border-radius: 3em 0 0 3em;
 }
 
+#searchBox select {
+	font-size: 0.75rem;
+	width: 45%;
+	border-radius: 0;
+}
+
 #searchBox button {
+	font-size: 0.9rem;
 	width: 40%;
 	border-radius: 0 3em 3em 0;
 }
@@ -121,11 +129,15 @@ footer a, footer a:hover {
 
 @media screen and (min-width: 992px) {
 	#searchBox {
-		width: 30%;
+		width: 35%;
+	}
+	
+	#searchBox select {
+		width: 45%;
 	}
 	
 	#searchBox button {
-		width: 30%;
+		width: 25%;
 	}
 
 	#login {
