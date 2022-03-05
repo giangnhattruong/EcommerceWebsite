@@ -88,35 +88,35 @@ public class Account {
 		this.check = check;
 	}
 	
-	public static String validateNewUser(String username, String password) {
-		String emailRegex = "\\w+@\\w+\\.\\w+";
+	public static String validateUser(String password) {
 		String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,10}$";
 		
-		if (!username.matches(emailRegex))
-			return "Invalid email.";
-		else if (!password.matches(passwordRegex))
+		if (!password.matches(passwordRegex))
 			return "Password must contain 6-10 characters, at least 1 special character, 1 uppercase character, 1 lowercase character and 1 digit.";
 	
 		return "Success";
 	}
+
 	
-	public static boolean doesUserExist(String username, String password, List<Account> accounts) {
-		Account foundAccount = accounts.stream()
-				.filter(a -> a.getUsername().equals(username) &&
-						a.getPassword().equals(password))
-				.findAny()
-				.orElse(null);
+	public static String validateUser(Account account) {
+		String emailRegex = "\\w+@\\w+\\.\\w+";
+		String phoneRegex = "\\d{8,10}";
+		int nameMaxLength = 30;
+		int addressMaxLength = 200;
 		
-		return foundAccount != null;
-	}
-	
-	public static Account findUser(String username, List<Account> accounts) {
-		Account foundAccount = accounts.stream()
-				.filter(a -> a.getUsername().equals(username))
-				.findAny()
-				.orElse(null);
+		if (!account.username.matches(emailRegex))
+			return "Invalid email.";
 		
-		return foundAccount;
+		if (account.name.length() >= nameMaxLength)
+			return "Name can't have more than " + nameMaxLength + " characters.";
+		
+		if (account.address.length() >= addressMaxLength)
+			return "Address can't have more than " + addressMaxLength + " characters.";
+		
+		if (!account.phone.matches(phoneRegex))
+			return "Phone must be a 8-10 digits number.";
+		
+		return validateUser(account.password);
 	}
 
 }

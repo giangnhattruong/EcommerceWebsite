@@ -43,6 +43,7 @@ public class AdminController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		List<Account> accounts = new ArrayList<>();
 		String action = StringUtils.getString(request.getParameter("action"));
 		String page = route(action, request);
 		
@@ -50,7 +51,6 @@ public class AdminController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/shop");
 		}
 		else {
-			List<Account> accounts = new ArrayList<>();
 			try {
 				accounts = AccountDao.getAccounts(ds);
 			} catch (SQLException e) {

@@ -47,7 +47,7 @@ public class AccountDao {
 		stmt.execute();
 		con.close();
 	}
-	
+
 	public static void updateAccount(DataSource ds, Account account) throws SQLException {
 		Connection con = ds.getConnection();
 		String SQL = "UPDATE Account SET password = ?, user_name = ?, user_address = ?, user_phone = ?, account_role = ? WHERE user_mail = ?";
@@ -61,4 +61,55 @@ public class AccountDao {
 		stmt.execute();
 		con.close();
 	}
+
+	public static boolean doesUserExist(DataSource ds, String username, String password) 
+			throws SQLException {
+		Connection con = ds.getConnection();
+		String SQL = "SELECT * FROM Account WHERE user_mail = ? AND password = ?";
+		PreparedStatement stmt = con.prepareStatement(SQL);
+		stmt.setString(1, username);
+		stmt.setString(2, password);
+		ResultSet rs = stmt.executeQuery();
+
+		return rs.next();
+	}
+
+	public static Account findUser(DataSource ds, String username) throws SQLException {
+		Account account = null;
+		
+		Connection con = ds.getConnection();
+		String SQL = "SELECT * FROM Account WHERE user_mail = ?";
+		PreparedStatement stmt = con.prepareStatement(SQL);
+		stmt.setString(1, username);
+		ResultSet rs = stmt.executeQuery();
+		
+		while (rs.next()) {
+			String email = rs.getString("user_mail");
+			String password = rs.getString("password");
+			String name = rs.getString("user_name");
+			String address = rs.getString("user_address");
+			String phone = rs.getString("user_phone");
+			int role = rs.getInt("account_role");
+			account = new Account(email, password, name, address, phone, role);
+		}
+		
+		return account;
+	}
+	
+//	public static void deleteAccount(DataSource ds, String username) throws SQLException {
+//		Connection con = ds.getConnection();
+//		String SQL = "DELETE Account WHERE user_mail = ?";
+//		PreparedStatement stmt = con.prepareStatement(SQL);
+//		stmt.setString(1, username);
+//		stmt.execute();
+//		con.close();
+//	}
+	
+//	public static void deleteAccounts(DataSource ds) throws SQLException {
+//		Connection con = ds.getConnection();
+//		String SQL = "DELETE FROM Account";
+//		PreparedStatement stmt = con.prepareStatement(SQL);
+//		stmt.execute();
+//		con.close();
+//	}
 }

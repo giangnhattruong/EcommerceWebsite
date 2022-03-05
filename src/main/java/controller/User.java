@@ -31,8 +31,6 @@ public class User extends HttpServlet {
 	@Resource(name = "jdbc/ShoppingDB")
 	private DataSource ds;
 
-	private List<Account> accounts;
-
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -69,24 +67,7 @@ public class User extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String formAction = request.getParameter("formAction");
-
-		if (accounts == null) {
-			try {
-				accounts = AccountDao.getAccounts(ds);
-				handleFormAction(request, response, formAction);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				System.out.println("Can't connect to database.");
-				formForward(request, response, 
-						"Our server is temporary down, please try again later.", "/user");
-				e.printStackTrace();
-			}
-		} else
-			handleFormAction(request, response, formAction);
-	}
-
-	private void handleFormAction(HttpServletRequest request, HttpServletResponse response, String formAction)
-			throws ServletException, IOException {
+		
 		switch (formAction) {
 		case "login":
 			doLogin(request, response);
@@ -107,9 +88,7 @@ public class User extends HttpServlet {
 		routes.put("forgotPassword", "/jsp/forgotPassword.jsp");
 		routes.put("register", "/jsp/register.jsp");
 
-		String page = StringUtils.getString(routes.get(action), "/jsp/error.jsp");
-
-		return page;
+		return StringUtils.getString(routes.get(action), "/jsp/error.jsp");
 	}
 
 	private boolean validateAdmin(String username, String password) {
@@ -126,19 +105,25 @@ public class User extends HttpServlet {
 		String password = StringUtils.getString(request.getParameter("password"));
 		String rememberMe = StringUtils.getString(request.getParameter("rememberMe"));
 
-		if (validateAdmin(username, password) || Account.doesUserExist(username, password, accounts)) {
-			HttpSession session = request.getSession();
-			session.setAttribute("username", username);
+		try {
+			if (validateAdmin(username, password) || AccountDao.doesUserExist(ds, username, password)) {
+				HttpSession session = request.getSession();
+				session.setAttribute("username", username);
 
-			if (rememberMe.equals("on"))
-				session.setMaxInactiveInterval(604800);
-			else
-				session.setMaxInactiveInterval(1800);
+				if (rememberMe.equals("on"))
+					session.setMaxInactiveInterval(604800);
+				else
+					session.setMaxInactiveInterval(1800);
 
-			response.sendRedirect(request.getContextPath() + "/admin");
-		} else {
-			formForward(request, response, username, 
-					"Invalid email or password.", "/jsp/login.jsp");
+				response.sendRedirect(request.getContextPath() + "/admin");
+			} else {
+				formForward(request, response, username, 
+						"Invalid email or password.", "/jsp/login.jsp");
+			}
+		} catch (SQLException | IOException | ServletException e) {
+			formForward(request, response, username,
+					"Our server is temporary down, please try again later.", "/user");
+			e.printStackTrace();
 		}
 	}
 
@@ -147,42 +132,41 @@ public class User extends HttpServlet {
 		String username = StringUtils.getString(request.getParameter("username")).toLowerCase();
 		String password = StringUtils.getString(request.getParameter("password1"));
 		String passwordConfirm = StringUtils.getString(request.getParameter("password2"));
-		String page = null;
 
-		// check if password confirm is matched with password
-		if (!password.equals(passwordConfirm)) {
-			formForward(request, response, username, 
-					"Password not matched.", "/jsp/forgotPassword.jsp");
-			return;
-		}
+		try {
+			Account foundAccount = AccountDao.findUser(ds, username);
 
-		// check if account exists
-		Account foundAccount = Account.findUser(username, accounts);
-		if (foundAccount == null) {
-			formForward(request, response, username, 
-					"User does not exist.", "/jsp/forgotPassword.jsp");
-			return;
-		}
+			// check if user exists
+			if (foundAccount == null) {
+				formForward(request, response, username, 
+						"User does not exist.", "/jsp/forgotPassword.jsp");
+				return;
+			}
 
-		// validate user with new password and set new password
-		String validateMessage = Account.validateNewUser(username, password);
-		if (validateMessage.equals("Success")) {
-			foundAccount.setPassword(password);
+			// check if password confirm is matched with password
+			if (!password.equals(passwordConfirm)) {
+				formForward(request, response, username, 
+						"Password not matched.", "/jsp/forgotPassword.jsp");
+				return;
+			}
 			
-			try {
+			// validate user with new password and set new password
+			String validateMessage = Account.validateUser(password);
+			if (validateMessage.equals("Success")) {
+				foundAccount.setPassword(password);
 				AccountDao.updateAccount(ds, foundAccount);
 				formForward(request, response, username, 
 						"Please login with new password.", "/jsp/login.jsp");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			} else {
 				formForward(request, response, username, 
-						"Reset password failed, please try again.", "/jsp/login.jsp");
-				e.printStackTrace();
+						validateMessage, "/jsp/forgotPassword.jsp");
 			}
-		} else {
-			formForward(request, response, username, 
-					validateMessage, "/jsp/forgotPassword.jsp");
+		} catch (SQLException e1) {
+			formForward(request, response, username,
+					"Our server is temporary down, please try again later.", "/user");
+			e1.printStackTrace();
 		}
+
 	}
 
 	private void doRegister(HttpServletRequest request, HttpServletResponse response)
@@ -195,47 +179,43 @@ public class User extends HttpServlet {
 		String phone = StringUtils.getString(request.getParameter("phone"));
 		Account account = new Account(username, password, name, address, phone);
 
-		// check if password confirm is matched with password
-		if (!password.equals(passwordConfirm)) {
-			formForward(request, response, username, 
-					"Password not matched.", "/jsp/register.jsp");
-			return;
-		}
+		try {
+			// check if account exists
+			Account foundAccount = AccountDao.findUser(ds, username);
+			
+			if (foundAccount != null) {
+				formForward(request, response, account,
+						"User already existed.", "/jsp/register.jsp");
+				return;
+			}
+			
+			// check if password confirm is matched with password
+			if (!password.equals(passwordConfirm)) {
+				formForward(request, response, account, 
+						"Password not matched.", "/jsp/register.jsp");
+				return;
+			}
 
-		// check if account exists
-		Account foundUser = Account.findUser(username, accounts);
-		if (foundUser != null) {
-			formForward(request, response, username, 
-					"User already existed.", "/jsp/register.jsp");
-			return;
-		}
+			// validate new user and set session
+			String validateMessage = Account.validateUser(account);
+			if (validateMessage.equals("Success")) {
 
-		// validate new user and set session
-		String validateMessage = Account.validateNewUser(username, password);
-		if (validateMessage.equals("Success")) {
-
-			// Add account to database
-			try {
+				// Add account to database
 				AccountDao.addAccount(ds, account);
-				accounts.add(account);
 
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
 
 				response.sendRedirect(request.getContextPath() + "/admin");
-			} catch (SQLException e) {
+			} else {
 				formForward(request, response, account, 
-						"Register failed, please try again.", "/jsp/register.jsp");
+						validateMessage, "/jsp/register.jsp");
 			}
-		} else {
-			formForward(request, response, account, validateMessage, "/jsp/register.jsp");
+		} catch (SQLException e1) {
+			formForward(request, response, account,
+					"Our server is temporary down, please try again later.", "/user");
+			e1.printStackTrace();
 		}
-	}
-
-	private void formForward(HttpServletRequest request, HttpServletResponse response, String validateMessage, String page)
-			throws ServletException, IOException {
-		request.setAttribute("message", validateMessage);
-		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	private void formForward(HttpServletRequest request, HttpServletResponse response, String username,
