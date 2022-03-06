@@ -51,12 +51,15 @@ public class UserServlet extends HttpServlet {
 		String action = StringUtils.getString(request.getParameter("action"));
 		String page = route(action, request);
 
+		// Check for logout
 		if (action.equals("logout")) {
 			session.invalidate();
 			response.sendRedirect(request.getContextPath() + "/shop");
 			return;
 		}
 
+		// Automatically redirect to AdminServlet if user is already set in session
+		// instead of going to login/register again
 		if (session.getAttribute("username") == null)
 			request.getRequestDispatcher(page).forward(request, response);
 		else
@@ -111,6 +114,7 @@ public class UserServlet extends HttpServlet {
 		String password = StringUtils.getString(request.getParameter("password"));
 		String rememberMe = StringUtils.getString(request.getParameter("rememberMe"));
 
+		// Check if user is admin or authenticated user then redirect admin page or home page
 		try {
 			if (isAdmin(username, password) || AccountDao.isAuthenticated(ds, username, password)) {
 				HttpSession session = request.getSession();

@@ -127,6 +127,16 @@ footer a, footer a:hover {
 	box-shadow: 2px 0 5px #000;
 }
 
+.updateCart {
+	color: #900;
+}
+
+.updateCart:hover {
+	text-decoration: none;
+	cursor: pointer;
+	color: #f00;
+}
+
 @media screen and (min-width: 992px) {
 	#searchBox {
 		width: 35%;

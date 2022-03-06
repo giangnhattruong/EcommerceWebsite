@@ -39,7 +39,7 @@
 		
 		<div class="d-flex justify-content-end mt-3">
 			<a class="btn btn-outline-info"
-				href="<c:url value="/checkout"></c:url>">
+				href="<c:url value="/cart"></c:url>">
 				<i class="bi bi-cart-check"></i> Go to cart
 			</a>
 		</div>

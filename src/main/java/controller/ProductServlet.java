@@ -52,83 +52,32 @@ public class ProductServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
-		addToCart(request, response);
 	}
 
 	private void showProduct(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		String id = StringUtils.getString(request.getParameter("id"));
-		showProduct(request, response, id);
-	}
-	
-	private void showProduct(HttpServletRequest request, HttpServletResponse response, String id)
-			throws IOException, ServletException {
-		showProduct(request, response, id, "");
-	}
-	
-	private void showProduct(HttpServletRequest request, HttpServletResponse response, String id, String message)
-			throws IOException, ServletException {
+		
+		// If no id from param, redirect home
 		if (id.equals("")) {
 			redirectHome(request, response);
 			return;
 		}
 		
+		// Check and get to product details page or show error page if product not found
 		try {
 			Product product = ProductDao.getProduct(ds, id);
-			
 			if (product == null)
 				pageForward(request, response, "Product not found.", "/jsp/error.jsp");
 			else 
-				request.setAttribute("message", message);
 				pageForward(request, response, product, "/jsp/productDetails.jsp");
+				HttpSession session = request.getSession();
+				session.removeAttribute("message");
 		} catch (SQLException e) {
 			pageForward(request, response, 
 					"Our server is temporary down, please try again later.", "/jsp/error.jsp");
 			e.printStackTrace();
 		}
-	}
-
-	private void addToCart(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, ServletException {
-		String id = request.getParameter("product_id");
-		String name = request.getParameter("product_name");
-		String description = request.getParameter("product_description");
-		double price = Double.parseDouble(request.getParameter("product_price"));
-		String type = request.getParameter("product_type");
-		String brand = request.getParameter("product_brand");
-		String imgURL = request.getParameter("product_imgURL");
-		Product product = new Product(id, name, description, price, type, brand, imgURL);
-		
-		int amount = Integer.parseInt(request.getParameter("amount"));
-		int maxAmount = 9;
-		
-		HttpSession session = request.getSession();
-		Map<Product, Integer> cart = (HashMap<Product, Integer>) session.getAttribute("cart");
-		
-		if (cart == null)
-			cart = new HashMap<>();
-		
-		if (!cart.containsKey(product) && amount <= maxAmount) {
-			cart.put(product, amount);
-			session.setAttribute("cart", cart);
-			showProduct(request, response, id);
-			return;
-		}
-		
-		int oldAmount = cart.get(product) == null? 0: cart.get(product);
-		int newAmount = oldAmount + amount;
-		
-		if (newAmount > maxAmount) {
-			String message = "You cannot add more than " + 
-					maxAmount + " items" +
-					(oldAmount != 0? " (" + oldAmount + " already in cart).": ".");
-			showProduct(request, response, id, message);
-			return;
-		}
-		
-		cart.replace(product, newAmount);
-		session.setAttribute("cart", cart);
-		redirectHome(request, response);
 	}
 
 	private void pageForward(HttpServletRequest request, HttpServletResponse response, String message, String page)

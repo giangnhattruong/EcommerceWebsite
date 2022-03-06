@@ -22,8 +22,9 @@
 			<div class="card-body">
 				<p class="text-danger text-end">${ message }</p>
 				<form class="row g-3 justify-content-end" method="post" 
-					action="<c:url value="/product"></c:url>">
+					action="<c:url value="/cart"></c:url>">
 					<label for="amount" class="col-auto col-lg-2 col-form-label lead text-end">Amount</label>
+					<input type="hidden" name="action" value="addToCart">
 					<input type="hidden" name="product_id" value="${ product.id }">
 					<input type="hidden" name="product_name" value="${ product.name }">
 					<input type="hidden" name="product_description" value="${ product.description }">

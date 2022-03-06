@@ -51,6 +51,7 @@ public class AdminServlet extends HttpServlet {
 		String action = StringUtils.getString(request.getParameter("action"));
 		String page = route(action, request);
 		
+		// Authentication, only let admin user go to admin page
 		if (session.getAttribute("username") == null || !session.getAttribute("username").equals("admin")) {
 			response.sendRedirect(request.getContextPath() + "/shop");
 		}
