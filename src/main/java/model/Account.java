@@ -15,18 +15,18 @@ public class Account {
 	}
 
 	public Account(String username, String password) {
-		this.username = username;
-		this.password = password;
+		this(username, password, null, null, null);
 	}
 	
 	public Account(String username, String password, String name, String address, String phone) {
-		this(username, password);
+		this.username = username;
+		this.password = password;
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
 		role = 1;
 	}
-	
+
 	public Account(String username, String password, String name, String address, String phone, int role) {
 		this(username, password, name, address, phone);
 		this.role = role;
@@ -88,7 +88,7 @@ public class Account {
 		this.check = check;
 	}
 	
-	public static String validateUser(String password) {
+	public static String validate(String password) {
 		String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,10}$";
 		
 		if (!password.matches(passwordRegex))
@@ -98,7 +98,7 @@ public class Account {
 	}
 
 	
-	public static String validateUser(Account account) {
+	public static String validate(Account account) {
 		String emailRegex = "\\w+@\\w+\\.\\w+";
 		String phoneRegex = "\\d{8,10}";
 		int nameMaxLength = 30;
@@ -116,7 +116,7 @@ public class Account {
 		if (!account.phone.matches(phoneRegex))
 			return "Phone must be a 8-10 digits number.";
 		
-		return validateUser(account.password);
+		return validate(account.password);
 	}
 
 }

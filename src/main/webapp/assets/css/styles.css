@@ -52,15 +52,15 @@ html {
 	border-radius: 0 3em 3em 0;
 }
 
-main .card {
+main .product-item {
 	width: 15rem;
 }
 
-main .card a, footer a {
+.product-item a, footer a {
 	text-decoration: none;
 }
 
-main .card a {
+main .product-item a {
 	color: var(--text-dark);
 }
 
@@ -68,12 +68,12 @@ footer a, footer a:hover {
 	color: var(--text-light);
 }
 
-#login {
+#login, #checkout {
 	width: 80vw;
 	box-shadow: 2px 2px 5px #000;
 }
 
-.about, .error {
+.about, .notify {
 	padding: 6rem;
 }
 

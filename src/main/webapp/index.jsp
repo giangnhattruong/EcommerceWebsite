@@ -12,7 +12,7 @@
 
 <div class="container-fluid row">
 	<main class="col-10 offset-1 col-lg-9 offset-lg-0 d-flex flex-column justify-content-between align-items-center">
-		<div class="d-flex flex-wrap justify-content-evenly mt-5">
+		<div class="d-flex flex-wrap justify-content-evenly mt-2">
 			<c:import url="/jsp/getProducts.jsp">
 				<c:param name="size" value="${ size }"></c:param>
 				<c:param name="page" value="${ page }"></c:param>
@@ -21,8 +21,8 @@
 	</main>
 	
 	<aside class="col-10 offset-1 col-lg-3 offset-lg-0 mt-5">
-		<jsp:include page="./jsp/cart.jsp"></jsp:include>
-		<jsp:include page="./jsp/popular.jsp"></jsp:include>
+		<c:import url="/jsp/cart.jsp"></c:import>
+		<c:import url="/jsp/popular.jsp"></c:import>
 	</aside>
 </div>
 

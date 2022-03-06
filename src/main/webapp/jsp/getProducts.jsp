@@ -35,14 +35,14 @@
 	</sql:query>
 	<%-- Show products --%>
 	<c:forEach var="row" items="${ products.rows }">
-		<div class="card me-5 mb-3">
-			<a href="#"> 
+		<div class="product-item card me-5 mb-3">
+			<a href="<c:url value="/product?id=${ row.product_id }"></c:url>"> 
 				<img src="${ row.product_img_source == null? defaultImgUrl: row.product_img_source }"
 				class="card-img-top" alt="product-picture">
-				<div class="card-body">
-					<h5 class="card-title">${ row.product_name }</h5>
-					<p class="card-text">${ row.product_type } - ${ row.product_brand }</p>
-					<p class="text-end">Price: $${ row.product_price }</p>
+				<h6 class="card-title lead mt-3 text-center">${ row.product_name }</h6>
+				<div class="card-body mt-auto">
+					<p class="card-text text-mute text-end"><small>${ row.product_type } - ${ row.product_brand }</small></p>
+					<p class="text-success mt-auto text-end"><em>Price: $${ row.product_price }</em></p>
 				</div>
 			</a>
 		</div>

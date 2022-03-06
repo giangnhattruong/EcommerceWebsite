@@ -22,13 +22,13 @@ import myutils.StringUtils;
  * Servlet implementation class Controller
  */
 @WebServlet("/shop")
-public class Controller extends HttpServlet {
+public class ShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Controller() {
+	public ShopServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

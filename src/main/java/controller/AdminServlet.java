@@ -24,7 +24,7 @@ import myutils.StringUtils;
  * Servlet implementation class AdminController
  */
 @WebServlet("/admin")
-public class AdminController extends HttpServlet {
+public class AdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	@Resource(name = "jdbc/ShoppingDB")
@@ -33,7 +33,7 @@ public class AdminController extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminController() {
+    public AdminServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

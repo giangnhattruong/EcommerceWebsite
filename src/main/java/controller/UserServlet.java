@@ -25,7 +25,7 @@ import myutils.StringUtils;
  * Servlet implementation class User
  */
 @WebServlet("/user")
-public class User extends HttpServlet {
+public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Resource(name = "jdbc/ShoppingDB")
@@ -34,7 +34,7 @@ public class User extends HttpServlet {
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public User() {
+	public UserServlet() {
 		super();
 	}
 
@@ -97,7 +97,7 @@ public class User extends HttpServlet {
 		return StringUtils.getString(routes.get(action), "/jsp/error.jsp");
 	}
 
-	private boolean validateAdmin(String username, String password) {
+	private boolean isAdmin(String username, String password) {
 		ServletContext application = getServletContext();
 		String adminUser = application.getInitParameter("adminUser");
 		String adminPass = application.getInitParameter("password");
@@ -112,7 +112,7 @@ public class User extends HttpServlet {
 		String rememberMe = StringUtils.getString(request.getParameter("rememberMe"));
 
 		try {
-			if (validateAdmin(username, password) || AccountDao.doesUserExist(ds, username, password)) {
+			if (isAdmin(username, password) || AccountDao.isAuthenticated(ds, username, password)) {
 				HttpSession session = request.getSession();
 				session.setAttribute("username", username);
 
@@ -140,7 +140,7 @@ public class User extends HttpServlet {
 		String passwordConfirm = StringUtils.getString(request.getParameter("password2"));
 
 		try {
-			Account foundAccount = AccountDao.findUser(ds, username);
+			Account foundAccount = AccountDao.getAccount(ds, username);
 
 			// check if user exists
 			if (foundAccount == null) {
@@ -157,7 +157,7 @@ public class User extends HttpServlet {
 			}
 			
 			// validate user with new password and set new password
-			String validateMessage = Account.validateUser(password);
+			String validateMessage = Account.validate(password);
 			if (validateMessage.equals("Success")) {
 				foundAccount.setPassword(password);
 				AccountDao.updateAccount(ds, foundAccount);
@@ -187,7 +187,7 @@ public class User extends HttpServlet {
 
 		try {
 			// check if account exists
-			Account foundAccount = AccountDao.findUser(ds, username);
+			Account foundAccount = AccountDao.getAccount(ds, username);
 			
 			if (foundAccount != null) {
 				formForward(request, response, account,
@@ -203,7 +203,7 @@ public class User extends HttpServlet {
 			}
 
 			// validate new user and set session
-			String validateMessage = Account.validateUser(account);
+			String validateMessage = Account.validate(account);
 			if (validateMessage.equals("Success")) {
 
 				// Add account to database
